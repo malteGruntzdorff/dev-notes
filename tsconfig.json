@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+      "jsx": "preserve",
+      "jsxImportSource": "react",
+      "module": "esnext",
+      "moduleResolution": "bundler",
+      "target": "ESNext",
+      "strict": true,
+      "baseUrl": ".",
+      "paths": {
+        "~/*": ["src/*"]
+      }
+    },
+    "include": ["src/**/*", "astro.config.mjs"]
+}
+  

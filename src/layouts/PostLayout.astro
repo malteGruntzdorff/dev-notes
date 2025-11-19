@@ -1,0 +1,30 @@
+---
+import BlogLayout from "./BlogLayout.astro";
+
+const { frontmatter } = Astro.props;
+
+const title = frontmatter.title ?? "Beitrag";
+const description = frontmatter.description ?? "";
+const date = frontmatter.date
+  ? new Date(frontmatter.date).toLocaleDateString("de-DE")
+  : null;
+---
+
+<BlogLayout {title} {description}>
+  <a href="/" class="back-link">Zur Übersicht</a>
+
+  <header class="page-header">
+    <div class="page-kicker">Dev Note</div>
+    <h1 class="page-title">{title}</h1>
+    {description && <p class="page-subtitle">{description}</p>}
+    {date && (
+      <p style="font-size: 0.75rem; color: rgba(148,163,184,0.9);">
+        {date}
+      </p>
+    )}
+  </header>
+
+  <article class="post-body">
+    <slot />
+  </article>
+</BlogLayout>

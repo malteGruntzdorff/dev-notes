@@ -1,0 +1,30 @@
+---
+import "../styles/global.css";
+const { title = "Dev Notes", description = "" } = Astro.props;
+---
+
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <main class="main-shell">
+      <header class="app-bar">
+        <div class="app-bar-avatar">M</div>
+        <div class="app-bar-meta">
+          <div class="app-bar-title">Dev Notes</div>
+          <div class="app-bar-subtitle">
+            Lernlog zu TypeScript, Testing, Next & Co.
+          </div>
+        </div>
+      </header>
+      <section class="main-content">
+        <slot />
+      </section>
+    </main>
+  </body>
+</html>

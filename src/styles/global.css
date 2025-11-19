@@ -1,0 +1,332 @@
+:root {
+    --bg: #020617;
+    --bg-elevated: #020617;
+    --bg-card: #020617;
+    --border-subtle: rgba(148, 163, 184, 0.35);
+    --fg: #e5e7eb;
+    --fg-muted: #9ca3af;
+    --accent: #38bdf8;
+    --accent-soft: rgba(56, 189, 248, 0.08);
+    --accent-strong: rgba(56, 189, 248, 0.25);
+    --radius-xl: 1.25rem;
+    --shadow-soft: 0 18px 60px rgba(15, 23, 42, 0.85);
+    --shadow-subtle: 0 10px 35px rgba(15, 23, 42, 0.6);
+  }
+  
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(circle at top, #0f172a 0, #020617 45%, #000 100%);
+    color: var(--fg);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+      "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 2.5rem 1.25rem 3rem;
+  }
+  
+  .main-shell {
+    width: 100%;
+    max-width: 960px;
+    background: linear-gradient(
+        135deg,
+        rgba(15, 23, 42, 0.96),
+        rgba(2, 6, 23, 0.98)
+      );
+    border-radius: 1.75rem;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(148, 163, 184, 0.28);
+    overflow: hidden;
+  }
+  
+  /* Top "App Bar" */
+  
+  .app-bar {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.28);
+    background: radial-gradient(
+        circle at top left,
+        rgba(56, 189, 248, 0.15),
+        transparent 60%
+      ),
+      radial-gradient(
+        circle at top right,
+        rgba(94, 234, 212, 0.08),
+        transparent 60%
+      ),
+      rgba(15, 23, 42, 0.98);
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+  }
+  
+  .app-bar-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    background: radial-gradient(circle at 30% 30%, #e5e7eb, #4b5563);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #020617;
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.65);
+  }
+  
+  .app-bar-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+  
+  .app-bar-title {
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+  
+  .app-bar-subtitle {
+    font-size: 0.75rem;
+    color: rgba(148, 163, 184, 0.9);
+  }
+  
+  /* Layout content */
+  
+  .main-content {
+    padding: 1.75rem 1.8rem 2rem;
+  }
+  
+  @media (min-width: 768px) {
+    .main-content {
+      padding: 2rem 2.25rem 2.25rem;
+    }
+  }
+  
+  .page-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.4rem;
+  }
+  
+  .page-kicker {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+  }
+  
+  .page-title {
+    font-size: clamp(1.6rem, 2.2vw, 2rem);
+    font-weight: 650;
+    letter-spacing: 0.03em;
+  }
+  
+  .page-subtitle {
+    font-size: 0.95rem;
+    color: var(--fg-muted);
+    max-width: 46rem;
+  }
+  
+  /* Post list */
+  
+  .post-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    margin-top: 0.9rem;
+  }
+  
+  .post-card {
+    position: relative;
+    padding: 0.9rem 1.1rem 1rem;
+    border-radius: 1rem;
+    border: 1px solid var(--border-subtle);
+    background: radial-gradient(
+        circle at top left,
+        rgba(56, 189, 248, 0.12),
+        transparent 55%
+      ),
+      radial-gradient(
+        circle at bottom right,
+        rgba(99, 102, 241, 0.04),
+        transparent 50%
+      ),
+      rgba(15, 23, 42, 0.96);
+    box-shadow: var(--shadow-subtle);
+    transition: transform 160ms ease, box-shadow 160ms ease,
+      border-color 160ms ease, background 160ms ease;
+    overflow: hidden;
+  }
+  
+  .post-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at top left,
+      rgba(56, 189, 248, 0.15),
+      transparent 60%
+    );
+    mix-blend-mode: soft-light;
+    opacity: 0;
+    transition: opacity 180ms ease;
+    pointer-events: none;
+  }
+  
+  .post-card:hover {
+    transform: translateY(-1px) translateZ(0);
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.9);
+    border-color: var(--accent-strong);
+  }
+  
+  .post-card:hover::before {
+    opacity: 1;
+  }
+  
+  .post-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.2rem;
+  }
+  
+  .post-title {
+    font-size: 0.98rem;
+    font-weight: 600;
+  }
+  
+  .post-date {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: rgba(148, 163, 184, 0.95);
+  }
+  
+  .post-description {
+    font-size: 0.85rem;
+    color: var(--fg-muted);
+    margin-bottom: 0.25rem;
+  }
+  
+  .post-meta {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    font-size: 0.74rem;
+    color: rgba(148, 163, 184, 0.9);
+  }
+  
+  .post-pill {
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.6);
+    background: radial-gradient(
+      circle at top left,
+      rgba(56, 189, 248, 0.22),
+      rgba(15, 23, 42, 0.9)
+    );
+    font-size: 0.7rem;
+  }
+  
+  /* Links */
+  
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: none;
+  }
+  
+  /* Post Detail */
+  
+  .post-body {
+    margin-top: 0.6rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: rgba(209, 213, 219, 0.98);
+  }
+  
+  .post-body h1,
+  .post-body h2,
+  .post-body h3 {
+    margin-top: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .post-body p {
+    margin: 0.4rem 0;
+  }
+  
+  .post-body ul,
+  .post-body ol {
+    margin: 0.4rem 0 0.4rem 1.4rem;
+  }
+  
+  .post-body code {
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+      Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.83rem;
+    padding: 0.12rem 0.3rem;
+    border-radius: 0.35rem;
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid rgba(55, 65, 81, 0.9);
+  }
+  
+  .post-body pre {
+    margin: 0.75rem 0;
+    padding: 0.8rem 0.9rem;
+    border-radius: 0.85rem;
+    background: radial-gradient(
+        circle at top left,
+        rgba(56, 189, 248, 0.16),
+        transparent 55%
+      ),
+      rgba(2, 6, 23, 0.98);
+    border: 1px solid rgba(55, 65, 81, 0.95);
+    overflow-x: auto;
+    box-shadow: 0 14px 40px rgba(15, 23, 42, 0.85);
+  }
+  
+  .post-body pre code {
+    border: none;
+    background: transparent;
+    padding: 0;
+  }
+  
+  /* Back link */
+  
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: rgba(148, 163, 184, 0.95);
+    margin-bottom: 1rem;
+  }
+  
+  .back-link::before {
+    content: "←";
+    font-size: 0.9rem;
+  }
+  
