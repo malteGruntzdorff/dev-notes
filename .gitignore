@@ -11,7 +11,6 @@ yarn.lock
 # Astro
 .dist
 .astro
-dist
 
 # Editor
 .vscode
@@ -19,4 +18,4 @@ dist
 
 # OS
 .DS_Store
-Thumbs.db
+Thumbs.
