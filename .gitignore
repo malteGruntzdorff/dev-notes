@@ -12,6 +12,8 @@ yarn.lock
 .dist
 .astro
 
+dist
+
 # Editor
 .vscode
 .idea
