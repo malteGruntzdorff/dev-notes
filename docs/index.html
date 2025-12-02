@@ -1,6 +1,257 @@
-<!DOCTYPE html><html lang="de"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Dev Notes</title><meta name="description" content="Lernlog zu TypeScript, Testing, Next &#38; Co."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="stylesheet" href="/dev-notes/_astro/intro.CEAKCdTM.css"></head> <body> <main class="main-shell"> <header class="app-bar"> <div class="app-bar-avatar">M</div> <div class="app-bar-meta"> <div class="app-bar-title">Dev Notes</div> <div class="app-bar-subtitle">
-Lernlog zu TypeScript, Testing, Next & Co.
-</div> </div> </header> <section class="main-content">  <header class="page-header"> <div class="page-kicker">Learning Log</div> <h1 class="page-title">Entwickler-Notizen</h1> <p class="page-subtitle">
-Kurze Einträge zu dem, was ich aktuell lerne – als Referenz für mich
-      selbst und als Portfolio für spätere Bewerbungen.
-</p> </header> <section class="post-list"> <a href="/dev-notes/posts/intro" class="post-card"> <div class="post-title-row"> <h2 class="post-title">Einstieg in meinen Dev-Lernblog</h2> <span class="post-date">19.11.2025</span> </div> <p class="post-description"> Warum ich meine Lernnotizen hier sammle und wie ich sie strukturiere. </p> <div class="post-meta"> <span class="post-pill">Meta</span> <span>Markdown Note</span> </div> </a> </section>  </section> </main> </body></html>
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Malte Gruntzdorff</title>
+    <meta
+      name="description"
+      content="Lernlog zu TypeScript, Testing, Next &#38; Co."
+    />
+    <link rel="icon" type="image/svg+xml" href="/dev-notes/avatar.svg" />
+    <style>
+      *,
+      *:before,
+      *:after {
+        box-sizing: border-box;
+      }
+      * {
+        margin: 0;
+      }
+      html {
+        line-height: 1.5;
+        -webkit-text-size-adjust: 100%;
+        font-family:
+          IBM Plex Mono,
+          ui-monospace,
+          SFMono-Regular,
+          Menlo,
+          Consolas,
+          Liberation Mono,
+          monospace;
+        scroll-behavior: smooth;
+      }
+      body {
+        min-height: 100vh;
+      }
+      img,
+      picture,
+      video,
+      canvas,
+      svg {
+        display: block;
+        max-width: 100%;
+      }
+      ul,
+      li,
+      ol {
+        list-style: none;
+        padding: 0;
+      }
+      input,
+      button,
+      textarea,
+      select {
+        font: inherit;
+      }
+      button {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      button:hover,
+      a:hover {
+        text-decoration: underline;
+        color: #00f;
+      }
+      button:focus-visible,
+      a:focus-visible {
+        outline: 2px solid blue;
+        outline-offset: 2px;
+      }
+      .post-card {
+        display: block;
+        outline: none;
+      }
+      .post-card:focus-visible {
+        outline: 2px solid blue;
+        outline-offset: 2px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      .app-bar-avatar {
+        width: 40px;
+        height: 40px;
+        background-image: url(/dev-notes/avatar.svg);
+        background-size: cover;
+        background-position: center;
+        border-radius: 50%;
+      }
+      .filter-buttons,
+      .post-tags {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+      .main-shell {
+        padding-top: 1em;
+        padding-bottom: 1em;
+      }
+      .main-content {
+        max-width: 50em;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      @media (max-width: 51em) {
+        .main-content {
+          margin-inline: 0.5em;
+        }
+      }
+      .intro-avatar {
+        width: 10em;
+        height: auto;
+      }
+      .post-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75em;
+      }
+      .post-card:hover {
+        color: #00f;
+        text-decoration: underline;
+      }
+      .date-paragraph {
+        font-size: 0.8em;
+      }
+      .search-input {
+        padding: 0.6rem 1rem;
+        border: 2px solid #ccc;
+        font: inherit;
+        font-size: 1rem;
+        outline: none;
+      }
+      .search-input:focus-visible {
+        border: 2px solid blue;
+      }
+    </style>
+    <script type="module">
+      const l = document.querySelector("#post-search"),
+        c = document.querySelector("#post-filter-buttons"),
+        r = document.querySelectorAll(".post-item");
+      (function () {
+        const t = new Date(1987, 10, 20),
+          e = new Date();
+        let a = e.getFullYear() - t.getFullYear();
+        const n = e.getMonth() - t.getMonth();
+        (n < 0 || (n === 0 && e.getDate() < t.getDate())) && a--;
+        const o = document.getElementById("intro-age");
+        o && (o.textContent = a.toString());
+      })();
+      const i = new Set();
+      r.forEach((t) => {
+        t.dataset.tags
+          .split(",")
+          .filter(Boolean)
+          .forEach((a) => i.add(a));
+      });
+      c.innerHTML =
+        '<button data-tag="all" class="active">#All</button>' +
+        [...i].map((t) => `<button data-tag="${t}">#${t}</button>`).join("");
+      let s = "all";
+      function g() {
+        const t = l.value.toLowerCase();
+        r.forEach((e) => {
+          const a = e.dataset.title,
+            n = e.dataset.tags.split(","),
+            o = !t || a.includes(t),
+            u = s === "all" || n.includes(s);
+          e.hidden = !(o && u);
+        });
+      }
+      l.addEventListener("input", g);
+      c.addEventListener("click", (t) => {
+        t.target.dataset.tag &&
+          ((s = t.target.dataset.tag),
+          c.querySelectorAll("button").forEach((e) => {
+            e.classList.toggle("active", e.dataset.tag === s);
+          }),
+          g());
+      });
+    </script>
+  </head>
+  <body>
+    <main class="main-shell">
+      <header class="app-bar"><div class="app-bar-meta"></div></header>
+      <section class="main-content">
+        <section class="intro">
+          <img
+            src="/dev-notes/avatar.svg"
+            alt="Pixel-Avatar von Malte Gruntzdorff"
+            class="intro-avatar"
+          />
+          <div>
+            <h1>Hi, ich bin Malte</h1>
+            <p>
+              ich bin <span id="intro-age"></span> Jahre alt, Webentwickler und
+              sammle hier meine Notizen zu typescript, testing, next.js & co.
+            </p>
+          </div>
+        </section>
+        <div class="blog-filter-bar">
+          <input
+            id="post-search"
+            type="search"
+            placeholder="Search posts…"
+            class="search-input"
+          />
+          <div id="post-filter-buttons" class="filter-buttons"></div>
+        </div>
+        <section class="post-list">
+          <li
+            class="post-item"
+            data-title="einstieg in meinen dev-lernblog"
+            data-tags="test"
+          >
+            <a href="/dev-notes/posts/intro copy" class="post-card">
+              <div class="post-title-row">
+                <h2 class="post-title">Einstieg in meinen Dev-Lernblog</h2>
+                <span class="post-date">19.11.2025</span>
+              </div>
+              <p class="post-description">
+                Warum ich meine Lernnotizen hier sammle und wie ich sie
+                strukturiere.
+              </p>
+              <div class="post-tags"><span class="post-pill">#Test</span></div>
+            </a>
+          </li>
+          <li
+            class="post-item"
+            data-title="einstieg in meinen dev-lernblog"
+            data-tags="test"
+          >
+            <a href="/dev-notes/posts/intro" class="post-card">
+              <div class="post-title-row">
+                <h2 class="post-title">Einstieg in meinen Dev-Lernblog</h2>
+                <span class="post-date">19.11.2025</span>
+              </div>
+              <p class="post-description">
+                Warum ich meine Lernnotizen hier sammle und wie ich sie
+                strukturiere.
+              </p>
+              <div class="post-tags"><span class="post-pill">#Test</span></div>
+            </a>
+          </li>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

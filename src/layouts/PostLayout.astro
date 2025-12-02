@@ -11,17 +11,15 @@ const date = frontmatter.date
 ---
 
 <BlogLayout {title} {description}>
-  <a href="/" class="back-link">Zur Übersicht</a>
-
-  <header class="page-header">
-    <div class="page-kicker">Dev Note</div>
-    <h1 class="page-title">{title}</h1>
-    {description && <p class="page-subtitle">{description}</p>}
-    {date && (
-      <p style="font-size: 0.75rem; color: rgba(148,163,184,0.9);">
+  <a href="/dev-notes">< Zurück zur Übersicht</a>
+  <header>
+    <h1>{title}</h1>
+     {date && (
+      <p class="date-paragraph">
         {date}
       </p>
     )}
+    {description && <p class="page-subtitle">{description}</p>}
   </header>
 
   <article class="post-body">

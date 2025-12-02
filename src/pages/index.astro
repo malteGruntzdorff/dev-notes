@@ -9,21 +9,40 @@ posts.sort((a, b) => {
   const db = b.frontmatter.date ? new Date(b.frontmatter.date).getTime() : 0;
   return db - da;
 });
+
 ---
 
-<BlogLayout title="Dev Notes" description="Lernlog zu TypeScript, Testing, Next & Co.">
-  <header class="page-header">
-    <div class="page-kicker">Learning Log</div>
-    <h1 class="page-title">Entwickler-Notizen</h1>
-    <p class="page-subtitle">
-      Kurze Einträge zu dem, was ich aktuell lerne – als Referenz für mich
-      selbst und als Portfolio für spätere Bewerbungen.
-    </p>
-  </header>
+<BlogLayout title="Malte Gruntzdorff" description="Lernlog zu TypeScript, Testing, Next & Co.">
+
+<section class="intro">
+    <img
+      src="/dev-notes/avatar.svg"
+      alt="Pixel-Avatar von Malte Gruntzdorff"
+      class="intro-avatar"
+    />
+    <div>
+      <h1>Hi, ich bin Malte</h1>
+      <p>
+        ich bin <span id="intro-age"></span> Jahre alt, Webentwickler und sammle hier meine Notizen
+        zu typescript, testing, next.js & co.
+      </p>
+    </div>
+  </section>
+
+  <div class="blog-filter-bar">
+    <input
+      id="post-search"
+      type="search"
+      placeholder="Search posts…"
+      class="search-input"
+    />
+
+    <div id="post-filter-buttons" class="filter-buttons"></div>
+  </div>
 
   <section class="post-list">
     {posts.map((post) => {
-      const { title, description, date, tag } = post.frontmatter;
+      const { title, description, date, tags = [] } = post.frontmatter;
       const url = post.url;
 
       const displayDate = date
@@ -31,22 +50,94 @@ posts.sort((a, b) => {
         : null;
 
       return (
-        <a href={url} class="post-card">
-          <div class="post-title-row">
-            <h2 class="post-title">{title}</h2>
-            {displayDate && <span class="post-date">{displayDate}</span>}
-          </div>
-          {description && (
-            <p class="post-description">
-              {description}
-            </p>
-          )}
-          <div class="post-meta">
-            {tag && <span class="post-pill">{tag}</span>}
-            <span>Markdown Note</span>
-          </div>
-        </a>
+        <li
+          class="post-item"
+          data-title={title.toLowerCase()}
+          data-tags={tags.join(",").toLowerCase()}
+        >
+          <a href={url} class="post-card">
+            <div class="post-title-row">
+              <h2 class="post-title">{title}</h2>
+              {displayDate && <span class="post-date">{displayDate}</span>}
+            </div>
+
+            {description && (
+              <p class="post-description">
+                {description}
+              </p>
+            )}
+
+            {tags.length > 0 && (
+              <div class="post-tags">
+                {tags.map(tag => (
+                  <span class="post-pill">#{tag}</span>
+                ))}
+              </div>
+            )}
+          </a>
+        </li>
       );
     })}
   </section>
 </BlogLayout>
+
+<script>
+  const search = document.querySelector("#post-search");
+  const buttonsContainer = document.querySelector("#post-filter-buttons");
+  const posts = document.querySelectorAll(".post-item");
+
+  (function () {
+    const birth = new Date(1987, 10, 20); // Monat 0-basiert: 10 = November
+    const now = new Date();
+    let age = now.getFullYear() - birth.getFullYear();
+    const m = now.getMonth() - birth.getMonth();
+    if (m < 0 || (m === 0 && now.getDate() < birth.getDate())) {
+      age--;
+    }
+    const el = document.getElementById("intro-age");
+    if (el) el.textContent = age.toString();
+  })();
+
+  // 🔥 Tags automatisch aus DOM sammeln
+  const tags = new Set();
+  posts.forEach((post) => {
+    const t = post.dataset.tags.split(",").filter(Boolean);
+    t.forEach((tag) => tags.add(tag));
+  });
+
+  // 🔥 Buttons rendern
+  buttonsContainer.innerHTML =
+    `<button data-tag="all" class="active">#All</button>` +
+    [...tags].map((tag) => `<button data-tag="${tag}">#${tag}</button>`).join("");
+
+  let activeTag = "all";
+
+  function applyFilters() {
+    const term = search.value.toLowerCase();
+
+    posts.forEach((post) => {
+      const title = post.dataset.title;
+      const tags = post.dataset.tags.split(",");
+
+      const matchesSearch = !term || title.includes(term);
+      const matchesTag = activeTag === "all" || tags.includes(activeTag);
+
+      post.hidden = !(matchesSearch && matchesTag);
+    });
+  }
+
+  // 🔥 Suche
+  search.addEventListener("input", applyFilters);
+
+  // 🔥 Filter Buttons
+  buttonsContainer.addEventListener("click", (e) => {
+    if (!e.target.dataset.tag) return;
+
+    activeTag = e.target.dataset.tag;
+    buttonsContainer.querySelectorAll("button").forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.tag === activeTag);
+    });
+
+    applyFilters();
+  });
+</script>
