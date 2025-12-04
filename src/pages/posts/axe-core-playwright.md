@@ -5,8 +5,6 @@ date: 2025-12-04
 tags: ["a11y", "playwright"]
 ---
 
-# axe-core/playwright
-
 ## Was ist axe-core?
 
 - Open-Source a11y-Engine
