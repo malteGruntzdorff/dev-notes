@@ -34,8 +34,6 @@ test("Beliebige-Seite Page ist a11y-konform", async ({ page }) => {
 ```
 ### Einzelne Komponenten Testen - include()
 ```ts
-### Einzelne Komponenten Testen
-```ts
   const results = await new AxeBuilder({ page })
     .include('[data-testid="storefinder-offcanvas"]')
     .analyze();
