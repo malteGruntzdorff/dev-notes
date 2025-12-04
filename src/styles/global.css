@@ -166,3 +166,13 @@ table {
 .search-input:focus-visible {
   border: 2px solid blue;
 }
+
+.post-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.post-body li {
+  list-style: disc inside;
+}
