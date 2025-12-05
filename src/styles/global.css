@@ -136,6 +136,7 @@ table {
 .intro-avatar {
   width: 10em;
   height: auto;
+  transform: scaleX(-1);
 }
 
 /* Blogliste */
